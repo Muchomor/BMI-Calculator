@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     lastKnownBMI.setText((getString(R.string.yourLastKnownBMI))+ " was: " + actualBMI);
                 }
                 clicked=true;
-
+                /*TODO set lastKnownBMI color*/
                 float res = BMICounter.calculateBMI(Float.parseFloat(mass.getText().toString()),
                         Float.parseFloat(height.getText().toString()));
                 actualBMI = String.valueOf(res);
