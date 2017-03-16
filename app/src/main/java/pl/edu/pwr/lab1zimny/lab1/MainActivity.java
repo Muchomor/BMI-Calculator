@@ -2,6 +2,7 @@ package pl.edu.pwr.lab1zimny.lab1;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     TextView resultString;
     TextView result;
     CountBMIForKGM BMICounter;
+    boolean clicked = false;
+    String actualBMI;
+    TextView lastKnownBMI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         resultString = (TextView) findViewById(R.id.resultString);
         result = (TextView) findViewById(R.id.result);
         BMICounter = new CountBMIForKGM();
+        lastKnownBMI = (TextView) findViewById(R.id.yourLastKnownBMI);
 
         calculate = (Button) findViewById(R.id.calculate);
 
@@ -40,13 +45,32 @@ public class MainActivity extends AppCompatActivity {
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
+
+                if(clicked){
+                    lastKnownBMI.setText((getString(R.string.yourLastKnownBMI))+ " was: " + actualBMI);
+                }
+                clicked=true;
+
                 float res = BMICounter.calculateBMI(Float.parseFloat(mass.getText().toString()),
                         Float.parseFloat(height.getText().toString()));
-                String actualBMI = String.valueOf(res);
+                actualBMI = String.valueOf(res);
                 resultString.setVisibility(View.VISIBLE);
+                colorOfText(res,result);
                 result.setText(actualBMI);
             }
         });
+    }
+
+    private void colorOfText(float BMI, TextView t){
+        if(BMI<=24.9){
+            t.setTextColor(Color.GREEN);
+        }
+        else if(BMI<=29.9){
+            t.setTextColor(Color.YELLOW);
+        }
+        else{
+            t.setTextColor(Color.RED);
+        }
     }
 
 }
