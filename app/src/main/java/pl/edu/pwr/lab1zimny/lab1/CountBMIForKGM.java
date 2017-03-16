@@ -22,11 +22,11 @@ public class CountBMIForKGM implements ICountBMI {
 
     @Override
     public float calculateBMI(float mass, float height) {
-
-        if (!isHeightValid(height) || !isMassValid(mass)) {
+        float heightInMeters = height/100;
+        if (!isHeightValid(heightInMeters) || !isMassValid(mass)) {
             throw new IllegalArgumentException("upsi");
         } else {
-            return mass / (height * height);
+            return mass / (heightInMeters * heightInMeters);
         }
     }
 }
