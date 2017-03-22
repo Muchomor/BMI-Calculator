@@ -2,6 +2,7 @@ package pl.edu.pwr.lab1zimny.lab1;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,24 +42,50 @@ public class MainActivity extends AppCompatActivity {
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
 
-                if(clicked){
-                    lastKnownBMI.setText((getString(R.string.yourLastKnownBMI))+ " was: " + actualBMI);
+                closeSoftKeyboard();
+                setLastKnownBMI();
+
+                float res = 0;
+                try {
+                    res = BMICounter.calculateBMI(Float.parseFloat(mass.getText().toString()),
+                            Float.parseFloat(height.getText().toString()));
+                    actualBMI = String.valueOf(res);
+                    resultString.setVisibility(View.VISIBLE);
+                    colorOfText(res,result);
+                    result.setText(actualBMI);
                 }
-                clicked=true;
-                /*TODO set lastKnownBMI color*/
-                float res = BMICounter.calculateBMI(Float.parseFloat(mass.getText().toString()),
-                        Float.parseFloat(height.getText().toString()));
-                actualBMI = String.valueOf(res);
+                catch(IllegalArgumentException iae){
+                    resultString.setVisibility(View.VISIBLE);
+                    result.setTextColor(Color.BLACK);
+                    result.setText(R.string.wrongInput);
+                }
+                /*actualBMI = String.valueOf(res);
                 resultString.setVisibility(View.VISIBLE);
                 colorOfText(res,result);
-                result.setText(actualBMI);
+                result.setText(actualBMI);*/
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_exit:
+                // do something
+                System.exit(0);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void colorOfText(float BMI, TextView t){
@@ -71,6 +98,36 @@ public class MainActivity extends AppCompatActivity {
         else{
             t.setTextColor(Color.RED);
         }
+    }
+
+    private void setLastKnownBMI(){
+        String textToSet="";
+        if(clicked) {
+            if(actualBMI==null){
+                textToSet = "unsuccessfull";
+            }
+            else {
+                textToSet = actualBMI;
+            }
+            lastKnownBMI.setText(("Your last BMI") + " was: " + textToSet);
+        }
+        clicked=true;
+    }
+
+    private void closeSoftKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void AppExit() {
+        this.finish();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
 }

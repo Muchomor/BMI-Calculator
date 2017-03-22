@@ -7,4 +7,5 @@
     <string name="result">Your BMI is</string>
     <string name="calculate">Calculate!</string>
     <string name="yourLastKnownBMI">Your last BMI</string>
+    <string name="wrongInput">It is impossible!</string>
 </resources>
