@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
         clicked=true;
     }
+    //changes
 
     private void closeSoftKeyboard(){
         InputMethodManager inputManager = (InputMethodManager)
