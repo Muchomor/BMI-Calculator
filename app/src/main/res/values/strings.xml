@@ -1,11 +1,12 @@
 <resources>
+
     <string name="app_name">BMI Calculator</string>
     <string name="mass">Mass</string>
     <string name="height">Height</string>
     <string name="massInput">Your mass</string>
     <string name="heightInput">Your height</string>
     <string name="result">Your BMI is</string>
-    <string name="calculate">Calculate!</string>
+    <string name="calculate">Calculate</string>
     <string name="yourLastKnownBMI">Your last BMI</string>
     <string name="wrongInput">It is impossible!</string>
 </resources>
