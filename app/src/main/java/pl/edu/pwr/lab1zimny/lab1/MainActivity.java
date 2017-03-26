@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         BMICounter = new CountBMIForKGM();
 
-
         metricsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     BMICounter = isChecked? new CountBMIForLBIN() : new CountBMIForKGM();
