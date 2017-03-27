@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         BMICounter = new CountBMIForKGM();
-
         metricsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     BMICounter = isChecked? new CountBMIForLBIN() : new CountBMIForKGM();
@@ -63,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
             result.setText(actualBMI);
         }
         catch(IllegalArgumentException iae){
-            resultString.setVisibility(View.VISIBLE);
-            result.setTextColor(Color.BLACK);
-            result.setText(R.string.wrongInput);
+            setErrorText();
         }
     }
 
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             t.setTextColor(Color.GREEN);
         }
         else if(BMI<=29.9){
-            t.setTextColor(Color.YELLOW);
+            t.setTextColor(Color.parseColor("#e5e500"));
         }
         else{
             t.setTextColor(Color.RED);
@@ -86,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void setErrorText(){
+        resultString.setVisibility(View.VISIBLE);
+        result.setTextColor(Color.BLACK);
+        result.setText(R.string.wrongInput);
     }
 }
 
