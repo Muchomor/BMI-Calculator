@@ -128,6 +128,31 @@ public class MainActivity extends AppCompatActivity {
         colorOfText(res,result);
         result.setText(actualBMI);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.save:
+                //TODO save
+                return true;
+            case R.id.share:
+                //TODO share
+                return true;
+            case R.id.author:
+                //TODO author
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
 
 
