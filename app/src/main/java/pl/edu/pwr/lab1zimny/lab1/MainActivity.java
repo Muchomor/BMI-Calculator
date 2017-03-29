@@ -90,6 +90,44 @@ public class MainActivity extends AppCompatActivity {
         result.setTextColor(Color.BLACK);
         result.setText(R.string.wrongInput);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        float mass = Float.parseFloat(massInput.getText().toString());
+        float height = Float.parseFloat(heightInput.getText().toString());
+        float res = BMICounter.calculateBMI(mass,height);
+        savedInstanceState.putFloat("MyMass", mass);
+        savedInstanceState.putFloat("MyHeight", height);
+        savedInstanceState.putString("MyBMI", String.valueOf(res));
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore UI state from the savedInstanceState.
+        // This bundle has also been passed to onCreate.
+
+        float mass = savedInstanceState.getFloat("MyMass");
+        float height = savedInstanceState.getFloat("MyHeight");
+        String string = savedInstanceState.getString("MyBMI");
+
+        massInput.setText(String.valueOf(mass));
+        heightInput.setText(String.valueOf(height));
+        result.setText(string);
+        float res = BMICounter.calculateBMI(mass,height);
+        actualBMI = String.valueOf(res);
+        resultString.setVisibility(View.VISIBLE);
+        colorOfText(res,result);
+        result.setText(actualBMI);
+    }
 }
 
 
