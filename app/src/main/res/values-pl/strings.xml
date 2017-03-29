@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">Kalkulator BMI</string>
+    <string name="mass">Masa</string>
+    <string name="height">Wzrost</string>
+    <string name="massInput">Twoja masa</string>
+    <string name="heightInput">Twój wzrost</string>
+    <string name="result">Twoje BMI</string>
+    <string name="calculate">Oblicz</string>
+    <string name="yourLastKnownBMI">Twoje ostatnie BMI</string>
+    <string name="wrongInput">To niemożliwe!</string>
+    <string name="metricalMetrics">metryczne(kg/m)</string>
+    <string name="imperialMetrics">imperialne(lb/in)</string>
+</resources>

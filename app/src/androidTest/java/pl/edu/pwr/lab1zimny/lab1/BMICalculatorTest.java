@@ -1,5 +1,6 @@
 package pl.edu.pwr.lab1zimny.lab1;
 
+import android.graphics.Color;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -14,6 +15,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -40,6 +42,17 @@ public class BMICalculatorTest {
     }
 
     @Test
+    public void isResultVisibleOnStart(){
+        onView(withId(R.id.result)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void isResultVisibleAfterClickOnCalculate(){
+        onView(withId(R.id.calculate)).perform(click());
+        onView(withId(R.id.result)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void isKGMCalculatorDoingGood(){
         onView(withId(R.id.heightInput)).perform(typeText("1.8"));
         onView(withId(R.id.massInput)).perform(typeText("80"));
@@ -55,7 +68,5 @@ public class BMICalculatorTest {
         onView(withId(R.id.calculate)).perform(click());
         onView(withId(R.id.result)).check(matches(withText("32.953125")));
     }
-
-
-
 }
+

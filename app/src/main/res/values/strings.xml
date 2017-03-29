@@ -9,4 +9,6 @@
     <string name="calculate">Calculate</string>
     <string name="yourLastKnownBMI">Your last BMI</string>
     <string name="wrongInput">It is impossible!</string>
+    <string name="metricalMetrics">metrical (kg/m)</string>
+    <string name="imperialMetrics">imperial (lb/in)</string>
 </resources>

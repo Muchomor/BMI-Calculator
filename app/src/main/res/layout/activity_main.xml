@@ -111,8 +111,8 @@
         android:id="@+id/metrics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="metrical (kg/m)"
-        android:textOn="imperial (lb/in)"
+        android:textOff="@string/metricalMetrics"
+        android:textOn="@string/imperialMetrics"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"/>
