@@ -47,50 +47,47 @@ public class MainActivity extends AppCompatActivity {
         BMICounter = new CountBMIForKGM();
         metricsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    BMICounter = isChecked? new CountBMIForLBIN() : new CountBMIForKGM();
+                BMICounter = isChecked ? new CountBMIForLBIN() : new CountBMIForKGM();
             }
         });
     }
 
     @OnClick(R.id.calculate)
-    public void submit(){
+    public void submit() {
         closeSoftKeyboard();
 
         float res = 0;
         try {
             float mass = Float.parseFloat(massInput.getText().toString());
             float height = Float.parseFloat(heightInput.getText().toString());
-            res = BMICounter.calculateBMI(mass,height);
+            res = BMICounter.calculateBMI(mass, height);
             actualBMI = String.valueOf(res);
             resultString.setVisibility(View.VISIBLE);
-            colorOfText(res,result);
+            colorOfText(res, result);
             result.setText(actualBMI);
-        }
-        catch(IllegalArgumentException iae){
+        } catch (IllegalArgumentException iae) {
             setErrorText();
         }
     }
 
-    private void colorOfText(float BMI, TextView t){
-        if(BMI<=24.9){
+    private void colorOfText(float BMI, TextView t) {
+        if (BMI <= 24.9) {
             t.setTextColor(Color.GREEN);
-        }
-        else if(BMI<=29.9){
+        } else if (BMI <= 29.9) {
             t.setTextColor(Color.parseColor("#e5e500"));
-        }
-        else{
+        } else {
             t.setTextColor(Color.RED);
         }
     }
 
-    private void closeSoftKeyboard(){
+    private void closeSoftKeyboard() {
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    private void setErrorText(){
+    private void setErrorText() {
         resultString.setVisibility(View.VISIBLE);
         result.setTextColor(Color.BLACK);
         result.setText(R.string.wrongInput);
@@ -126,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
         heightInput.setText(height);
         result.setText(savedBMI);
         resultString.setVisibility(View.VISIBLE);
-        colorOfText(Float.valueOf(savedBMI),result);
+        if(!savedBMI.equals("It is impossible!")) {
+            colorOfText(Float.valueOf(savedBMI), result);
+        }
     }
 
     @Override
@@ -152,12 +151,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveBMI(){
+    private void saveBMI() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("mass", massInput.getText().toString());
         editor.putString("height", heightInput.getText().toString());
-        editor.putString("BMI",result.getText().toString());
+        editor.putString("BMI", result.getText().toString());
         editor.apply();
         Context context = getApplicationContext();
         CharSequence text = "Saved";
@@ -167,18 +166,20 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void loadBMI(){
+    private void loadBMI() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String BMI = preferences.getString("BMI", "");
-        String mass = preferences.getString("mass","");
-        String height = preferences.getString("height","");
+        String mass = preferences.getString("mass", "");
+        String height = preferences.getString("height", "");
         massInput.setText(mass);
         heightInput.setText(height);
         result.setText(BMI);
-        colorOfText(Float.valueOf(BMI),result);
+        if (BMI.length() > 0 && !BMI.equals("It is impossible!")) {
+            colorOfText(Float.valueOf(BMI), result);
+        }
     }
 
-    private void share(){
+    private void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Hey, take a look at my BMI: " + result.getText().toString();
@@ -186,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
-
 }
 
 
