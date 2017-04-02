@@ -1,7 +1,10 @@
 package pl.edu.pwr.lab1zimny.lab1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -11,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        loadBMI();
 
         BMICounter = new CountBMIForKGM();
         metricsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -97,14 +102,13 @@ public class MainActivity extends AppCompatActivity {
         // Save UI state changes to the savedInstanceState.
         // This bundle will be passed to onCreate if the process is
         // killed and restarted.
-        float mass = Float.parseFloat(massInput.getText().toString());
-        float height = Float.parseFloat(heightInput.getText().toString());
-        float res = BMICounter.calculateBMI(mass,height);
-        savedInstanceState.putFloat("MyMass", mass);
-        savedInstanceState.putFloat("MyHeight", height);
-        savedInstanceState.putString("MyBMI", String.valueOf(res));
-
         super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString("MyMass", massInput.getText().toString());
+        savedInstanceState.putString("MyHeight", heightInput.getText().toString());
+        savedInstanceState.putString("MyBMI", result.getText().toString());
+
+
     }
 
     @Override
@@ -114,19 +118,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Restore UI state from the savedInstanceState.
         // This bundle has also been passed to onCreate.
+        String mass = savedInstanceState.getString("MyMass");
+        String height = savedInstanceState.getString("MyHeight");
+        String savedBMI = savedInstanceState.getString("MyBMI");
 
-        float mass = savedInstanceState.getFloat("MyMass");
-        float height = savedInstanceState.getFloat("MyHeight");
-        String string = savedInstanceState.getString("MyBMI");
-
-        massInput.setText(String.valueOf(mass));
-        heightInput.setText(String.valueOf(height));
-        result.setText(string);
-        float res = BMICounter.calculateBMI(mass,height);
-        actualBMI = String.valueOf(res);
+        massInput.setText(mass);
+        heightInput.setText(height);
+        result.setText(savedBMI);
         resultString.setVisibility(View.VISIBLE);
-        colorOfText(res,result);
-        result.setText(actualBMI);
+        colorOfText(Float.valueOf(savedBMI),result);
     }
 
     @Override
@@ -138,19 +138,44 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.save:
-                //TODO save
+                saveBMI();
                 return true;
             case R.id.share:
                 //TODO share
                 return true;
             case R.id.author:
-                //TODO author
+                startActivity(new Intent(this, AboutAuthor.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void saveBMI(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("mass", massInput.getText().toString());
+        editor.putString("height", heightInput.getText().toString());
+        editor.putString("BMI",result.getText().toString());
+        editor.apply();
+        Context context = getApplicationContext();
+        CharSequence text = "Saved";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    private void loadBMI(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String BMI = preferences.getString("BMI", "");
+        String mass = preferences.getString("mass","");
+        String height = preferences.getString("height","");
+        massInput.setText(mass);
+        heightInput.setText(height);
+        result.setText(BMI);
+        colorOfText(Float.valueOf(BMI),result);
     }
 
 }

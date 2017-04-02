@@ -11,4 +11,13 @@
     <string name="wrongInput">It is impossible!</string>
     <string name="metricalMetrics">metrical (kg/m)</string>
     <string name="imperialMetrics">imperial (lb/in)</string>
+    <string name="authorName">Jakub Zimny</string>
+    <string name="authorInfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Praesent et neque nec sem bibendum fermentum quis ut erat.
+        Ut auctor dignissim diam ac imperdiet. Orci varius natoque penatibus et magnis dis parturient montes,
+        nascetur ridiculus mus. In ut pretium augue. Nulla facilisi. Etiam ultricies massa sit amet mi tincidunt consectetur.
+        Cras eu odio quis magna eleifend ornare. Sed diam nunc, dignissim nec ex non, ultrices hendrerit neque.
+        Maecenas vitae odio a nibh consequat ullamcorper nec eu nisl. Aliquam tristique semper.
+    </string>
+    <string name="author">Author</string>
 </resources>
