@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 saveBMI();
                 return true;
             case R.id.share:
-                //TODO share
+                share();
                 return true;
             case R.id.author:
                 startActivity(new Intent(this, AboutAuthor.class));
@@ -176,6 +176,15 @@ public class MainActivity extends AppCompatActivity {
         heightInput.setText(height);
         result.setText(BMI);
         colorOfText(Float.valueOf(BMI),result);
+    }
+
+    private void share(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Hey, take a look at my BMI: " + result.getText().toString();
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My BMI");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
 }
