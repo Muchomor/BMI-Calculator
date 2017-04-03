@@ -5,10 +5,13 @@ package pl.edu.pwr.lab1zimny.lab1;
  */
 
 public class CountBMIForLBIN implements ICountBMI {
-        static final float MINIMAL_MASS = 22.07f;
-        static final float MAXIMAL_MASS = 551.25f;
-        static final float MINIMAL_HEIGHT = 19.69f;
-        static final float MAXIMAL_HEIGHT = 98.43f;
+        static final float METERS_TO_INCHES_RATIO = 2.204f;
+        static final float KILOGRAMS_TO_POUNDS_RATIO = 39.37f;
+        static final float MINIMAL_MASS = CountBMIForKGM.getMinimalMass() * METERS_TO_INCHES_RATIO;
+        static final float MAXIMAL_MASS = CountBMIForKGM.getMaximalMass() * METERS_TO_INCHES_RATIO;
+        static final float MINIMAL_HEIGHT = CountBMIForKGM.getMinimalHeight() * KILOGRAMS_TO_POUNDS_RATIO;
+        static final float MAXIMAL_HEIGHT = CountBMIForKGM.getMaximalHeight() * KILOGRAMS_TO_POUNDS_RATIO;
+
 
         @Override
         public boolean isMassValid(float mass) {

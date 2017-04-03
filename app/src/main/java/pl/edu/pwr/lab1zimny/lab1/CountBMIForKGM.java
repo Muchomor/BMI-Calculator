@@ -10,7 +10,24 @@ public class CountBMIForKGM implements ICountBMI {
     static final float MINIMAL_HEIGHT = 0.5f;
     static final float MAXIMAL_HEIGHT = 2.5f;
 
+    public static float getMinimalMass() {
+        return MINIMAL_MASS;
+    }
+
+    public static float getMaximalMass() {
+        return MAXIMAL_MASS;
+    }
+
+    public static float getMinimalHeight() {
+        return MINIMAL_HEIGHT;
+    }
+
+    public static float getMaximalHeight() {
+        return MAXIMAL_HEIGHT;
+    }
+
     @Override
+
     public boolean isMassValid(float mass) {
         return (mass>=MINIMAL_MASS && mass<=MAXIMAL_MASS);
     }
@@ -28,4 +45,5 @@ public class CountBMIForKGM implements ICountBMI {
             return mass / (height * height);
         }
     }
+
 }
