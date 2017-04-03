@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -54,7 +55,9 @@ public class BMICalculatorTest {
 
     @Test
     public void isKGMCalculatorDoingGood(){
+        onView(withId(R.id.heightInput)).perform(clearText());
         onView(withId(R.id.heightInput)).perform(typeText("1.8"));
+        onView(withId(R.id.massInput)).perform(clearText());
         onView(withId(R.id.massInput)).perform(typeText("80"));
         onView(withId(R.id.calculate)).perform(click());
         onView(withId(R.id.result)).check(matches(withText("24.69136")));
@@ -62,8 +65,10 @@ public class BMICalculatorTest {
 
     @Test
     public void isLBINCalculatorDoingGood(){
+        onView(withId(R.id.heightInput)).perform(clearText());
         onView(withId(R.id.metrics)).perform(click());
         onView(withId(R.id.heightInput)).perform(typeText("80"));
+        onView(withId(R.id.massInput)).perform(clearText());
         onView(withId(R.id.massInput)).perform(typeText("300"));
         onView(withId(R.id.calculate)).perform(click());
         onView(withId(R.id.result)).check(matches(withText("32.953125")));
