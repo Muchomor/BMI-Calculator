@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Method for calculate button on click. Calculates BMI, sets resultString visible,
+    sets value and color of result.
+    If one of params are invalid, sets error text.
+     */
     @OnClick(R.id.calculate)
     public void submit() {
         closeSoftKeyboard();
@@ -70,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Sets color of result text depending on BMI value
+
+    @param BMI  calculatedBMI
+    @param t    text view of which color we want to set
+     */
     private void colorOfText(float BMI, TextView t) {
         if (BMI <= 24.9) {
             t.setTextColor(Color.GREEN);
@@ -80,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Closes soft keyboard when calculate button is clicked.
+     */
     private void closeSoftKeyboard() {
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -135,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /*
+
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -151,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Saves actual values in text views to shared preferences.
+     */
     private void saveBMI() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -166,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /*
+    Loads saved shared preferences.
+     */
     private void loadBMI() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String BMI = preferences.getString("BMI", "");
@@ -179,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Shares BMI value from result view via accessible, installed applications.
+     */
     private void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");

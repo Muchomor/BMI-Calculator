@@ -27,7 +27,6 @@ public class CountBMIForKGM implements ICountBMI {
     }
 
     @Override
-
     public boolean isMassValid(float mass) {
         return (mass>=MINIMAL_MASS && mass<=MAXIMAL_MASS);
     }
@@ -36,7 +35,9 @@ public class CountBMIForKGM implements ICountBMI {
     public boolean isHeightValid(float height) {
         return (height>=MINIMAL_HEIGHT && height<=MAXIMAL_HEIGHT);
     }
-
+    /*
+    @throws IllegalArgumentException If mass or height is not valid
+     */
     @Override
     public float calculateBMI(float mass, float height) {
         if (!isHeightValid(height) || !isMassValid(mass)) {

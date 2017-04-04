@@ -34,43 +34,51 @@ public class BMICalculatorTest {
 
     @Test
     public void isMetricsSwtichClickable(){
+        //metrics switch should be clickable
         onView(withId(R.id.metrics)).check(matches(isClickable()));
     }
 
     @Test
     public void isCalculateButtonClickable(){
+        //calculate button should be clickable
         onView(withId(R.id.calculate)).check(matches(isClickable()));
     }
 
     @Test
-    public void isResultVisibleOnStart(){
-        onView(withId(R.id.result)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void isResultVisibleAfterClickOnCalculate(){
+        //when calculate is clicked
         onView(withId(R.id.calculate)).perform(click());
+        //result view should be displayed
         onView(withId(R.id.result)).check(matches(isDisplayed()));
     }
 
     @Test
     public void isKGMCalculatorDoingGood(){
         onView(withId(R.id.heightInput)).perform(clearText());
+        //when height is typed
         onView(withId(R.id.heightInput)).perform(typeText("1.8"));
         onView(withId(R.id.massInput)).perform(clearText());
+        //when mass is typed
         onView(withId(R.id.massInput)).perform(typeText("80"));
+        //when calculate is clicked
         onView(withId(R.id.calculate)).perform(click());
+        //then result should be displayed
         onView(withId(R.id.result)).check(matches(withText("24.69136")));
     }
 
     @Test
     public void isLBINCalculatorDoingGood(){
         onView(withId(R.id.heightInput)).perform(clearText());
+        //when metrics is changed
         onView(withId(R.id.metrics)).perform(click());
+        //when height is typed
         onView(withId(R.id.heightInput)).perform(typeText("80"));
         onView(withId(R.id.massInput)).perform(clearText());
+        //when mass is typed
         onView(withId(R.id.massInput)).perform(typeText("300"));
+        //when calculate is clicked
         onView(withId(R.id.calculate)).perform(click());
+        //then result should be displayed
         onView(withId(R.id.result)).check(matches(withText("32.953125")));
     }
 }
