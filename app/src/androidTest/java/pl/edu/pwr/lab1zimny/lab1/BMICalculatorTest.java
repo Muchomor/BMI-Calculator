@@ -72,6 +72,12 @@ public class BMICalculatorTest {
         onView(withId(R.id.result)).check(matches(withText("24.69136")));
     }
 
+    /*
+    Selects spinner option with specified text.
+
+    @param  id  view which on we want to perform action
+    @param  text    text that will be clicked
+     */
     private void selectSpinnerText(int id, String text) {
         onView(withId(id)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(text))).perform(click());
