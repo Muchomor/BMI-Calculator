@@ -118,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    /*
+    Sets text of result view.
+     */
     private void setErrorText() {
         resultString.setVisibility(View.VISIBLE);
         result.setTextColor(Color.BLACK);

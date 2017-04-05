@@ -23,6 +23,9 @@ public class CountBMIForLBIN implements ICountBMI {
             return (height>=MINIMAL_HEIGHT && height<=MAXIMAL_HEIGHT);
         }
 
+        /*
+        @throws IllegalArgumentException If mass or height is not valid
+         */
         @Override
         public float calculateBMI(float mass, float height) {
             if (!isHeightValid(height) || !isMassValid(mass)) {
