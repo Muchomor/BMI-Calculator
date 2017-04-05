@@ -20,4 +20,9 @@
         Maecenas vitae odio a nibh consequat ullamcorper nec eu nisl. Aliquam tristique semper.
     </string>
     <string name="author">Author</string>
+    <string-array name="metricsSpinner">
+        <item>metrical (kg/m)</item>
+        <item>imperial (lb/in)</item>
+    </string-array>
 </resources>
+

@@ -111,16 +111,16 @@
         android:textSize="60dp"
         android:layout_below="@id/spaceAfterResultString" />
 
-    <Switch
-        android:id="@+id/metrics"
+    <Spinner
+        android:id="@+id/metricsSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="@string/metricalMetrics"
-        android:textOn="@string/imperialMetrics"
+        android:layout_below="@id/result"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/result" />
+        android:layout_marginTop="20dp">
+
+
+    </Spinner>
 
 </RelativeLayout>
 

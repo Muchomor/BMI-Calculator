@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     TextView resultString;
     @Bind(R.id.result)
     TextView result;
-    @Bind(R.id.metrics)
-    Switch metricsButton;
+    @Bind(R.id.metricsSpinner)
+    Spinner metricsSpinner;
+
     ICountBMI BMICounter;
     String actualBMI;
 
@@ -42,12 +46,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.metricsSpinner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        metricsSpinner.setAdapter(adapter);
+
         loadBMI();
 
         BMICounter = new CountBMIForKGM();
-        metricsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                BMICounter = isChecked ? new CountBMIForLBIN() : new CountBMIForKGM();
+
+        metricsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BMICounter = position==0? new CountBMIForKGM() : new CountBMIForLBIN();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //it will never happen, because application starts with first option selected
             }
         });
     }
@@ -118,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putString("MyMass", massInput.getText().toString());
         savedInstanceState.putString("MyHeight", heightInput.getText().toString());
         savedInstanceState.putString("MyBMI", result.getText().toString());
-
-
     }
 
     @Override
@@ -177,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("mass", massInput.getText().toString());
         editor.putString("height", heightInput.getText().toString());
         editor.putString("BMI", result.getText().toString());
+        editor.putInt("actualSpinnerState", metricsSpinner.getSelectedItemPosition());
         editor.apply();
         Context context = getApplicationContext();
         CharSequence text = "Saved";
@@ -194,9 +210,12 @@ public class MainActivity extends AppCompatActivity {
         String BMI = preferences.getString("BMI", "");
         String mass = preferences.getString("mass", "");
         String height = preferences.getString("height", "");
+        int spinnerPosition = preferences.getInt("actualSpinnerState",0);
+        System.out.println(spinnerPosition);
         massInput.setText(mass);
         heightInput.setText(height);
         result.setText(BMI);
+        metricsSpinner.setSelection(spinnerPosition);
         if (BMI.length() > 0 && !BMI.equals("It is impossible!")) {
             colorOfText(Float.valueOf(BMI), result);
         }
